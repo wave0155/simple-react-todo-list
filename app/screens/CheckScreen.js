@@ -48,6 +48,14 @@ export default class CheckScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Fab
+          position='bottomRight'
+          active='true'
+          style={{ backgroundColor: '#5067FF' }}
+          onPress={() => this.setState({ isAdderVisible: true })}
+        >
+          <Icon name='plus' type='font-awesome' color='white'/>
+        </Fab>
         <View>
           <FlatList
             keyExtractor={this.keyExtractor}
@@ -66,14 +74,6 @@ export default class CheckScreen extends React.Component {
             extraData={this.state.refreshList}
           />
         </View>
-        <Fab
-          position='bottomRight'
-          active='true'
-          style={{ backgroundColor: '#5067FF' }}
-          onPress={() => this.setState({ isAdderVisible: true })}
-        >
-          <Icon name='plus' type='font-awesome' color='white'/>
-        </Fab>
         {/* Adder Overlay */}
         <Overlay
          height={400}
