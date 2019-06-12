@@ -33,7 +33,7 @@ export default class SplashScreen extends React.Component {
     return (
         <View style={styles.container}>
             <Icon name='check' type='font-awesome' size={200}/>
-            <Text style={{fontSize: 40, textAlign: 'center'}}>Do your jobs.</Text>
+            <Text style={{fontSize: 40, textAlign: 'center'}}>Cheque</Text>
         </View>
     );
   }
