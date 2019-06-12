@@ -1,45 +1,46 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { ListItem, Overlay, Input, Icon, Button } from 'react-native-elements';
 import { Fab } from 'native-base';
+// import console = require('console');
 
 export default class CheckScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state={
       task: [
-        {name: 'Do Laundry'},
-        {name: 'Walk the Dog'},
-        {name: 'Meet the Boss'}
+        {name: 'Do Laundry', done: false},
+        {name: 'Walk the Dog', done: false},
+        {name: 'Meet the Boss', done: true}
       ],
       isAdderVisible: false,
       adderInput: null,
     }
   }
 
+  keyExtractor = (item, index) => index.toString()
+
+  renderItem = ({ item }) => (
+    <ListItem
+      title={item.name}
+      checkmark={item.done}
+    />
+  )
+
   addTask = (taskName) => {
     this.state.task.push(taskName)
   }
-
-  // renderTask = () => {
-  //   this.state.task.map((item, index) => (
-  //     <ListItem
-  //      key={index}
-  //      title={item.name}/>
-  //   ))
-  // }
 
   render() {
     return (
       <View style={styles.container}>
         <View>
-        {
-          this.state.task.map((item, index) => (
-            <ListItem
-             key={index}
-             title={item.name}/>
-          ))
-        }
+          <FlatList
+            keyExtractor={this.keyExtractor}
+            data={this.state.task}
+            renderItem={this.renderItem}
+            extraData={this.state.refreshList}
+          />
         </View>
         <Fab 
           position='bottomRight'
@@ -70,9 +71,15 @@ export default class CheckScreen extends React.Component {
               <Button
                 title='Add Task'
                 onPress={() => {
-                  this.setState({ task: [...this.state.task, this.state.adderInput]} )
+                  if(this.state.adderInput !== null) {
+                    tempObject = {name: this.state.adderInput, done: false}
+                    this.setState({
+                      task: [...this.state.task, tempObject],
+                      isAdderVisible: false,
+                      adderInput: null,
+                    })
+                  }
                   this.setState({ isAdderVisible: false })
-                  this.setState({ adderInput: null })
                 }}
               />
               <Button
