@@ -2,16 +2,16 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { ListItem, Overlay, Input, Icon, Button } from 'react-native-elements';
 import { Fab } from 'native-base';
-// import console = require('console');
+import TodoListItem from '../components/TodoListItem'
 
 export default class CheckScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state={
       task: [
-        {name: 'Do Laundry', done: false},
-        {name: 'Walk the Dog', done: false},
-        {name: 'Meet the Boss', done: false}
+        {name: 'Do Laundry', done: true},
+        {name: 'Walk the Dog', done: true},
+        {name: 'Meet the Boss', done: true}
       ],
       isAdderVisible: false,
       isEditorVisible: false,
@@ -24,33 +24,26 @@ export default class CheckScreen extends React.Component {
 
   keyExtractor = (item, index) => index.toString()
 
-  renderItem = ({ item ,index}) => (
-    <TouchableOpacity>
-        <ListItem
-        title={item.name}
-        checkmark={item.done}
-        onPress={() => {
-          this.setState(() => {
-            const task = this.state.task
-            task[index].done = !task[index].done
-            return {
-              task,
-            }
-          })
-          this.setState({
-            refreshList: !this.state.refreshList
-          })
-        }}
-        onLongPress={() => {
-          this.setState({
-            isEditorVisible: true,
-            editorInput: item.name,
-            editorTarget: index,
-          })
-        }}
-      />
-    </TouchableOpacity>
-  )
+  checkerHandler = (index) => {
+    this.setState(() => {
+      const task = this.state.task
+      task[index].done = !task[index].done
+      return {
+        task,
+      }
+    })
+    this.setState({
+      refreshList: !this.state.refreshList
+    })
+  }
+
+  editHandler = (item, index) => {
+    this.setState({
+      isEditorVisible: true,
+      editorInput: item.name,
+      editorTarget: index,
+    })
+  }
 
   render() {
     return (
@@ -59,11 +52,21 @@ export default class CheckScreen extends React.Component {
           <FlatList
             keyExtractor={this.keyExtractor}
             data={this.state.task}
-            renderItem={this.renderItem}
+            renderItem={({ item, index }) => {
+              return(
+                <TodoListItem 
+                  name={item.name}
+                  done={item.done}
+                  index={index}
+                  checkerHandler={this.checkerHandler}
+                  editHandler={this.editHandler}
+                />
+              )
+            }}
             extraData={this.state.refreshList}
           />
         </View>
-        <Fab 
+        <Fab
           position='bottomRight'
           active='true'
           style={{ backgroundColor: '#5067FF' }}
