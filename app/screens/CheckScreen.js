@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { ListItem, Overlay, Input, Icon, Button } from 'react-native-elements';
 import { Fab } from 'native-base';
 // import console = require('console');
@@ -25,29 +25,31 @@ export default class CheckScreen extends React.Component {
   keyExtractor = (item, index) => index.toString()
 
   renderItem = ({ item ,index}) => (
-    <ListItem
-      title={item.name}
-      checkmark={item.done}
-      onPress={() => {
-        this.setState(() => {
-          const task = this.state.task
-          task[index].done = !task[index].done
-          return {
-            task,
-          }
-        })
-        this.setState({
-          refreshList: !this.state.refreshList
-        })
-      }}
-      onLongPress={() => {
-        this.setState({
-          isEditorVisible: true,
-          editorInput: item.name,
-          editorTarget: index,
-        })
-      }}
-    />
+    <TouchableOpacity>
+        <ListItem
+        title={item.name}
+        checkmark={item.done}
+        onPress={() => {
+          this.setState(() => {
+            const task = this.state.task
+            task[index].done = !task[index].done
+            return {
+              task,
+            }
+          })
+          this.setState({
+            refreshList: !this.state.refreshList
+          })
+        }}
+        onLongPress={() => {
+          this.setState({
+            isEditorVisible: true,
+            editorInput: item.name,
+            editorTarget: index,
+          })
+        }}
+      />
+    </TouchableOpacity>
   )
 
   render() {
