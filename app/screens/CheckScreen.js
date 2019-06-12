@@ -174,7 +174,7 @@ export default class CheckScreen extends React.Component {
 
       </View>
     );
-  }
+  } 
 }
 
 const styles=StyleSheet.create({
