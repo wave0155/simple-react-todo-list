@@ -11,19 +11,32 @@ export default class CheckScreen extends React.Component {
       task: [
         {name: 'Do Laundry', done: false},
         {name: 'Walk the Dog', done: false},
-        {name: 'Meet the Boss', done: true}
+        {name: 'Meet the Boss', done: false}
       ],
       isAdderVisible: false,
       adderInput: null,
+      refreshList: true,
     }
   }
 
   keyExtractor = (item, index) => index.toString()
 
-  renderItem = ({ item }) => (
+  renderItem = ({ item ,index}) => (
     <ListItem
       title={item.name}
       checkmark={item.done}
+      onPress={() => {
+        this.setState((state) => {
+          const task = this.state.task
+          task[index].done = !task[index].done
+          return {
+            task,
+          }
+        })
+        this.setState({
+          refreshList: !this.state.refreshList
+        })
+      }}
     />
   )
 
