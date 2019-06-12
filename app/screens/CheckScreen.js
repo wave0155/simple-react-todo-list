@@ -14,7 +14,10 @@ export default class CheckScreen extends React.Component {
         {name: 'Meet the Boss', done: false}
       ],
       isAdderVisible: false,
+      isEditorVisible: false,
+      editorTarget: null,
       adderInput: null,
+      editorInput: null,
       refreshList: true,
     }
   }
@@ -26,7 +29,7 @@ export default class CheckScreen extends React.Component {
       title={item.name}
       checkmark={item.done}
       onPress={() => {
-        this.setState((state) => {
+        this.setState(() => {
           const task = this.state.task
           task[index].done = !task[index].done
           return {
@@ -37,12 +40,15 @@ export default class CheckScreen extends React.Component {
           refreshList: !this.state.refreshList
         })
       }}
+      onLongPress={() => {
+        this.setState({
+          isEditorVisible: true,
+          editorInput: item.name,
+          editorTarget: index,
+        })
+      }}
     />
   )
-
-  addTask = (taskName) => {
-    this.state.task.push(taskName)
-  }
 
   render() {
     return (
@@ -63,7 +69,7 @@ export default class CheckScreen extends React.Component {
         >
           <Icon name='plus' type='font-awesome' color='white'/>
         </Fab>
-
+        {/* Adder Overlay */}
         <Overlay
          height={400}
          isVisible={this.state.isAdderVisible}
@@ -97,11 +103,70 @@ export default class CheckScreen extends React.Component {
               />
               <Button
                 title='Cancel'
-                onPress={() => this.setState({ isAdderVisible: false })}
+                onPress={() => this.setState({ 
+                  isAdderVisible: false, 
+                  adderInput: null, 
+                })}
               />
             </View>
           </View>
         </Overlay>
+        {/* Editor overlay */}
+        <Overlay
+         height={400}
+         isVisible={this.state.isEditorVisible}
+         onBackdropPress={() => this.setState({ isEditorVisible: false })}
+        >
+          <View style={styles.overlayView}>
+            <View>
+              <Text style={{fontSize: 30, textAlign: 'center', fontWeight: 'bold'}}>Edit Task</Text>
+            </View>
+            <View style={styles.addTaskInput}>
+              <Input
+                placeholder='Task Name'
+                leftIcon={{ type: 'font-awesome', name: 'tasks' }}
+                onChangeText={(text) => this.setState({editorInput: text})}
+                value={this.state.editorInput}
+              />
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+              <Button
+                title='Change task name'
+                onPress={() => {
+                  if(this.state.editorInput !== '') {
+                    this.setState(() => {
+                      task = this.state.task
+                      task[this.state.editorTarget].name = this.state.editorInput
+                      return {
+                        task,
+                      }
+                    })
+                    this.setState({
+                      isEditorVisible: false,
+                      editorInput: null,
+                      editorTarget: null,
+                      refreshList: !this.state.refreshList,
+                    })
+                  }
+                  this.setState({ 
+                    isEditorVisible: false,
+                    editorInput: null,
+                    editorTarget: null,
+                  })
+                }}
+              />
+              <Button
+                title='Cancel'
+                onPress={() => this.setState({
+                  isEditorVisible: false,
+                  editorInput: null,
+                  editorTarget: null,
+                })}
+              />
+            </View>
+          </View>
+        </Overlay>
+
       </View>
     );
   }
