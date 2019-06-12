@@ -9,9 +9,9 @@ export default class CheckScreen extends React.Component {
     super(props)
     this.state={
       task: [
-        {name: 'Do Laundry', done: true},
-        {name: 'Walk the Dog', done: true},
-        {name: 'Meet the Boss', done: true}
+        {name: 'Do Laundry', done: false},
+        {name: 'Walk the Dog', done: false},
+        {name: 'Kill Diavolo', done: false}
       ],
       isAdderVisible: false,
       isEditorVisible: false,
