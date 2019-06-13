@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import { Overlay, Input, Icon, Button } from 'react-native-elements';
 import { Fab } from 'native-base';
 import TodoListItem from '../components/TodoListItem'
+import AddTaskOverlay from '../components/AddTaskOverlay'
 
 export default class CheckScreen extends React.Component {
   constructor(props) {
@@ -41,6 +42,37 @@ export default class CheckScreen extends React.Component {
     })
   }
 
+  closeAdderOverlayHandler = () => {
+    this.setState({ 
+      isAdderVisible: false,
+      adderInput: null
+    })
+  }
+
+  adderInputHandler = (text) => {
+    this.setState({ adderInput: text })
+  }
+
+  addTaskConfirmButtonHandler = () => {
+    if(this.state.adderInput !== null) {
+        tempObject = {name: this.state.adderInput, done: false}
+        this.setState({
+          task: [...this.state.task, tempObject],
+          isAdderVisible: false,
+          adderInput: null,
+        })
+    }
+    this.setState({ isAdderVisible: false })
+  }
+
+  addTaskCancelButtonHandler = () => {
+    this.setState({ 
+      isAdderVisible: false, 
+      adderInput: null, 
+    })
+  }
+  
+
   render() {
     return (
       <View style={styles.container}>
@@ -71,47 +103,15 @@ export default class CheckScreen extends React.Component {
           />
         </View>
         {/* Adder Overlay */}
-        <Overlay
-         height={400}
-         isVisible={this.state.isAdderVisible}
-         onBackdropPress={() => this.setState({ isAdderVisible: false })}
-        >
-          <View style={styles.overlayView}>
-            <View>
-              <Text style={{fontSize: 30, textAlign: 'center', fontWeight: 'bold'}}>Add Task</Text>
-            </View>
-            <View style={styles.addTaskInput}>
-              <Input
-                placeholder='Task Name'
-                leftIcon={{ type: 'font-awesome', name: 'tasks' }}
-                onChangeText={(text) => this.setState({adderInput: text})}
-              />
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-              <Button
-                title='Add Task'
-                onPress={() => {
-                  if(this.state.adderInput !== null) {
-                    tempObject = {name: this.state.adderInput, done: false}
-                    this.setState({
-                      task: [...this.state.task, tempObject],
-                      isAdderVisible: false,
-                      adderInput: null,
-                    })
-                  }
-                  this.setState({ isAdderVisible: false })
-                }}
-              />
-              <Button
-                title='Cancel'
-                onPress={() => this.setState({ 
-                  isAdderVisible: false, 
-                  adderInput: null, 
-                })}
-              />
-            </View>
-          </View>
-        </Overlay>
+        <AddTaskOverlay
+         isAdderVisible={this.state.isAdderVisible}
+         closeAdderOverlayHandler={this.closeAdderOverlayHandler}
+         adderInputHandler={this.adderInputHandler}
+         addTaskConfirmButtonHandler={this.addTaskConfirmButtonHandler}
+         addTaskCancelButtonHandler={this.addTaskCancelButtonHandler}
+         overlayViewStyle={styles.overlayView}
+         addTaskInputStyle={styles.addTaskInput}
+        />
         {/* Editor overlay */}
         <Overlay
          height={400}
@@ -179,7 +179,6 @@ const styles=StyleSheet.create({
   overlayView: {
     flex: 1,
     justifyContent: 'space-evenly',
-    // marginVertical: 50,
   },
   addTaskInput: {
     
