@@ -18,7 +18,6 @@ export default class CheckScreen extends React.Component {
       editorTarget: null,
       adderInput: null,
       editorInput: null,
-      refreshList: true,
     }
   }
 
@@ -31,9 +30,6 @@ export default class CheckScreen extends React.Component {
       return {
         task,
       }
-    })
-    this.setState({
-      refreshList: !this.state.refreshList
     })
   }
 
@@ -71,7 +67,7 @@ export default class CheckScreen extends React.Component {
                 />
               )
             }}
-            extraData={this.state.refreshList}
+            extraData={this.state}
           />
         </View>
         {/* Adder Overlay */}
@@ -150,7 +146,6 @@ export default class CheckScreen extends React.Component {
                       isEditorVisible: false,
                       editorInput: null,
                       editorTarget: null,
-                      refreshList: !this.state.refreshList,
                     })
                   }
                   this.setState({ 
