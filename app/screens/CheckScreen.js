@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { ListItem, Overlay, Input, Icon, Button } from 'react-native-elements';
+import { Overlay, Input, Icon, Button } from 'react-native-elements';
 import { Fab } from 'native-base';
 import TodoListItem from '../components/TodoListItem'
 
