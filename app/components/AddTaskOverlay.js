@@ -12,13 +12,13 @@ export default class AddTaskOverlay extends React.Component {
             <Overlay
             height={400}
             isVisible={this.props.isAdderVisible}
-            onBackdropPress={this.props.closeAdderOverlayHandler}
+            onBackdropPress={this.props.backdropAdderOverlayHandler}
             >
                 <View style={styles.overlayView}>
                     <View>
                     <Text style={{fontSize: 30, textAlign: 'center', fontWeight: 'bold'}}>Add Task</Text>
                     </View>
-                    <View style={styles.addTaskInput}>
+                    <View>
                     <Input
                         placeholder='Task Name'
                         leftIcon={{ type: 'font-awesome', name: 'tasks' }}
@@ -28,11 +28,11 @@ export default class AddTaskOverlay extends React.Component {
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
                     <Button
                         title='Add Task'
-                        onPress={() => this.props.addTaskConfirmButtonHandler()}
+                        onPress={this.props.addTaskConfirmButtonHandler}
                     />
                     <Button
                         title='Cancel'
-                        onPress={() => this.props.addTaskCancelButtonHandler()}
+                        onPress={this.props.addTaskCancelButtonHandler}
                     />
                     </View>
                 </View>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { Overlay, Input, Icon, Button } from 'react-native-elements';
+import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Icon, Button } from 'react-native-elements';
 import { Fab } from 'native-base';
 import TodoListItem from '../components/TodoListItem'
 import AddTaskOverlay from '../components/AddTaskOverlay'
+import EditTaskOverlay from '../components/EditTaskOverlay'
 
 export default class CheckScreen extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ export default class CheckScreen extends React.Component {
     })
   }
 
-  closeAdderOverlayHandler = () => {
+  backdropAdderOverlayHandler = () => {
     this.setState({ 
       isAdderVisible: false,
       adderInput: null
@@ -69,6 +70,49 @@ export default class CheckScreen extends React.Component {
     this.setState({ 
       isAdderVisible: false, 
       adderInput: null, 
+    })
+  }
+
+  backdropEditorOverlayHandler = () => {
+    this.setState({ 
+      isEditorVisible: false,
+      editorInput: null,
+    })
+  }
+  
+  editorInputHandler = (text) => {
+    this.setState({ 
+      editorInput: text,
+    })
+  }
+
+  editTaskConfirmButtonHandler = () => {
+    if(this.state.editorInput !== '') {
+        this.setState(() => {
+        task = this.state.task
+        task[this.state.editorTarget].name = this.state.editorInput
+        return {
+            task,
+        }
+        })
+        this.setState({
+          isEditorVisible: false,
+          editorInput: null,
+          editorTarget: null,
+        })
+    }
+    this.setState({ 
+          isEditorVisible: false,
+          editorInput: null,
+          editorTarget: null,
+    })
+  }
+
+  editTaskCancelButtonHandler = () => {
+    this.setState({
+      isEditorVisible: false,
+      editorInput: null,
+      editorTarget: null,
     })
   }
   
@@ -113,60 +157,14 @@ export default class CheckScreen extends React.Component {
          addTaskInputStyle={styles.addTaskInput}
         />
         {/* Editor overlay */}
-        <Overlay
-         height={400}
-         isVisible={this.state.isEditorVisible}
-         onBackdropPress={() => this.setState({ isEditorVisible: false })}
-        >
-          <View style={styles.overlayView}>
-            <View>
-              <Text style={{fontSize: 30, textAlign: 'center', fontWeight: 'bold'}}>Edit Task</Text>
-            </View>
-            <View style={styles.addTaskInput}>
-              <Input
-                placeholder='Task Name'
-                leftIcon={{ type: 'font-awesome', name: 'tasks' }}
-                onChangeText={(text) => this.setState({editorInput: text})}
-                value={this.state.editorInput}
-              />
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-              <Button
-                title='Change task name'
-                onPress={() => {
-                  if(this.state.editorInput !== '') {
-                    this.setState(() => {
-                      task = this.state.task
-                      task[this.state.editorTarget].name = this.state.editorInput
-                      return {
-                        task,
-                      }
-                    })
-                    this.setState({
-                      isEditorVisible: false,
-                      editorInput: null,
-                      editorTarget: null,
-                    })
-                  }
-                  this.setState({ 
-                    isEditorVisible: false,
-                    editorInput: null,
-                    editorTarget: null,
-                  })
-                }}
-              />
-              <Button
-                title='Cancel'
-                onPress={() => this.setState({
-                  isEditorVisible: false,
-                  editorInput: null,
-                  editorTarget: null,
-                })}
-              />
-            </View>
-          </View>
-        </Overlay>
-
+        <EditTaskOverlay
+         isEditorVisible={this.state.isEditorVisible}
+         backdropEditorOverlayHandler={this.backdropEditorOverlayHandler}
+         editorInputHandler={this.editorInputHandler}
+         editorInput={this.state.editorInput}
+         editTaskConfirmButtonHandler={this.editTaskConfirmButtonHandler}
+         editTaskCancelButtonHandler={this.editTaskCancelButtonHandler}
+        />
       </View>
     );
   } 
