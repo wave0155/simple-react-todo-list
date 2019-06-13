@@ -149,12 +149,10 @@ export default class CheckScreen extends React.Component {
         {/* Adder Overlay */}
         <AddTaskOverlay
          isAdderVisible={this.state.isAdderVisible}
-         closeAdderOverlayHandler={this.closeAdderOverlayHandler}
+         backdropAdderOverlayHandler={this.backdropAdderOverlayHandler}
          adderInputHandler={this.adderInputHandler}
          addTaskConfirmButtonHandler={this.addTaskConfirmButtonHandler}
          addTaskCancelButtonHandler={this.addTaskCancelButtonHandler}
-         overlayViewStyle={styles.overlayView}
-         addTaskInputStyle={styles.addTaskInput}
         />
         {/* Editor overlay */}
         <EditTaskOverlay
