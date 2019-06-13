@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import CheckBox from '../components/CheckBox';
 // import console = require('console');
@@ -13,6 +13,7 @@ export default class TodoListItem extends React.Component {
     return (
       <TouchableOpacity>
         <ListItem
+        containerStyle={{flex: 5,}}
           title={this.props.name}
           onPress={() => {
             this.props.checkerHandler(this.props.index)

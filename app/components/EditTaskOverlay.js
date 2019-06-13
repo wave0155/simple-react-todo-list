@@ -28,12 +28,17 @@ export default class EditTaskOverlay extends React.Component {
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
                         <Button
-                            title='Change task name'
+                            title='Edit'
                             onPress={this.props.editTaskConfirmButtonHandler}
                         />
                         <Button
                             title='Cancel'
                             onPress={this.props.editTaskCancelButtonHandler}
+                        />
+                        <Button
+                            title='Delete'
+                            buttonStyle={{backgroundColor: 'red'}}
+                            onPress={this.props.deleteHandler}
                         />
                     </View>
                 </View>

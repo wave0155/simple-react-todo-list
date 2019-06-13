@@ -43,6 +43,18 @@ export default class CheckScreen extends React.Component {
     })
   }
 
+  deleteHandler = () => {
+    this.setState(() => {
+      task = this.state.task.splice(this.state.editorTarget, 1)
+      return task;
+    })
+    this.setState({
+      isEditorVisible: false,
+      editorInput: null,
+      editorTarget: null,
+    })
+  }
+
   backdropAdderOverlayHandler = () => {
     this.setState({ 
       isAdderVisible: false,
@@ -77,6 +89,7 @@ export default class CheckScreen extends React.Component {
     this.setState({ 
       isEditorVisible: false,
       editorInput: null,
+      editorTarget: null,
     })
   }
   
@@ -89,11 +102,11 @@ export default class CheckScreen extends React.Component {
   editTaskConfirmButtonHandler = () => {
     if(this.state.editorInput !== '') {
         this.setState(() => {
-        task = this.state.task
-        task[this.state.editorTarget].name = this.state.editorInput
-        return {
-            task,
-        }
+          task = this.state.task
+          task[this.state.editorTarget].name = this.state.editorInput
+          return {
+              task,
+          }
         })
         this.setState({
           isEditorVisible: false,
@@ -162,6 +175,7 @@ export default class CheckScreen extends React.Component {
          editorInput={this.state.editorInput}
          editTaskConfirmButtonHandler={this.editTaskConfirmButtonHandler}
          editTaskCancelButtonHandler={this.editTaskCancelButtonHandler}
+         deleteHandler={this.deleteHandler}
         />
       </View>
     );

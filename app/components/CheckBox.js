@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { Icon } from 'react-native-elements';
 
 export default class CheckBox extends React.Component {
@@ -9,8 +9,8 @@ export default class CheckBox extends React.Component {
 
     checkBoxRender = (condition) => {
         if(condition)
-            return <Icon name='check'/>
-        return <View></View>
+            return <View><Icon name='check'/></View>
+        return <View><Text>      </Text></View>
     }
 
     render() {
@@ -21,3 +21,9 @@ export default class CheckBox extends React.Component {
         )
     }
 }
+
+const styles=StyleSheet.create({
+    // checkBoxContainer: {
+    //     flex: 1,
+    // }
+})
