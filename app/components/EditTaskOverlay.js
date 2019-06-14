@@ -24,6 +24,7 @@ export default class EditTaskOverlay extends React.Component {
                             leftIcon={{ type: 'font-awesome', name: 'tasks' }}
                             onChangeText={(text) => this.props.editorInputHandler(text)}
                             value={this.props.editorInput}
+                            clearButtonMode='while-editing'
                         />
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
