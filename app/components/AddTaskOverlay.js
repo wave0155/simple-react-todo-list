@@ -22,8 +22,9 @@ export default class AddTaskOverlay extends React.Component {
                     <Input
                         placeholder='Task Name'
                         leftIcon={{ type: 'font-awesome', name: 'tasks' }}
+                        leftIconContainerStyle={{marginRight: 5, marginLeft: 0}}
+                        autoFocus={true}
                         onChangeText={(text) => this.props.adderInputHandler(text)}
-                        clearButtonMode='while-editing'
                     />
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
