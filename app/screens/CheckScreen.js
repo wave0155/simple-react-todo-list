@@ -24,6 +24,57 @@ export default class CheckScreen extends React.Component {
     }
   }
 
+  render() {
+    return (
+      <View style={styles.container}>
+        <Fab
+          position='bottomRight'
+          active='true'
+          style={{ backgroundColor: '#2699FB' }}
+          onPress={() => this.setState({ isAdderVisible: true })}
+        >
+          <Icon name='plus' type='font-awesome' color='white'/>
+        </Fab>
+        <View>
+          <FlatList
+            keyExtractor={this.keyExtractor}
+            data={this.state.task}
+            renderItem={({ item, index }) => {
+              return(
+                <TodoListItem 
+                  name={item.name}
+                  done={item.done}
+                  index={index}
+                  checkerHandler={this.checkerHandler}
+                  editHandler={this.editHandler}
+                />
+              )
+            }}
+            extraData={this.state}
+          />
+        </View>
+        {/* Adder Overlay */}
+        <AddTaskOverlay
+         isAdderVisible={this.state.isAdderVisible}
+         backdropAdderOverlayHandler={this.backdropAdderOverlayHandler}
+         adderInputHandler={this.adderInputHandler}
+         addTaskConfirmButtonHandler={this.addTaskConfirmButtonHandler}
+         addTaskCancelButtonHandler={this.addTaskCancelButtonHandler}
+        />
+        {/* Editor overlay */}
+        <EditTaskOverlay
+         isEditorVisible={this.state.isEditorVisible}
+         backdropEditorOverlayHandler={this.backdropEditorOverlayHandler}
+         editorInputHandler={this.editorInputHandler}
+         editorInput={this.state.editorInput}
+         editTaskConfirmButtonHandler={this.editTaskConfirmButtonHandler}
+         editTaskCancelButtonHandler={this.editTaskCancelButtonHandler}
+         deleteHandler={this.deleteHandler}
+        />
+      </View>
+    );
+  }
+
   keyExtractor = (item, index) => index.toString()
 
   checkerHandler = (index) => {
@@ -45,9 +96,8 @@ export default class CheckScreen extends React.Component {
   }
 
   deleteHandler = () => {
-    this.setState(() => {
-      task = this.state.task.splice(this.state.editorTarget, 1)
-      return task;
+    this.setState({
+      task: this.state.task.splice(this.state.editorTarget, 1)
     })
     this.setState({
       isEditorVisible: false,
@@ -129,58 +179,6 @@ export default class CheckScreen extends React.Component {
       editorTarget: null,
     })
   }
-  
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Fab
-          position='bottomRight'
-          active='true'
-          style={{ backgroundColor: '#5067FF' }}
-          onPress={() => this.setState({ isAdderVisible: true })}
-        >
-          <Icon name='plus' type='font-awesome' color='white'/>
-        </Fab>
-        <View>
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={this.state.task}
-            renderItem={({ item, index }) => {
-              return(
-                <TodoListItem 
-                  name={item.name}
-                  done={item.done}
-                  index={index}
-                  checkerHandler={this.checkerHandler}
-                  editHandler={this.editHandler}
-                />
-              )
-            }}
-            extraData={this.state}
-          />
-        </View>
-        {/* Adder Overlay */}
-        <AddTaskOverlay
-         isAdderVisible={this.state.isAdderVisible}
-         backdropAdderOverlayHandler={this.backdropAdderOverlayHandler}
-         adderInputHandler={this.adderInputHandler}
-         addTaskConfirmButtonHandler={this.addTaskConfirmButtonHandler}
-         addTaskCancelButtonHandler={this.addTaskCancelButtonHandler}
-        />
-        {/* Editor overlay */}
-        <EditTaskOverlay
-         isEditorVisible={this.state.isEditorVisible}
-         backdropEditorOverlayHandler={this.backdropEditorOverlayHandler}
-         editorInputHandler={this.editorInputHandler}
-         editorInput={this.state.editorInput}
-         editTaskConfirmButtonHandler={this.editTaskConfirmButtonHandler}
-         editTaskCancelButtonHandler={this.editTaskCancelButtonHandler}
-         deleteHandler={this.deleteHandler}
-        />
-      </View>
-    );
-  } 
 }
 
 const styles=StyleSheet.create({

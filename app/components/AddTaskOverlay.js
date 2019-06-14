@@ -30,10 +30,12 @@ export default class AddTaskOverlay extends React.Component {
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
                     <Button
                         title='Add Task'
+                        buttonStyle={{backgroundColor: '#2699FB'}}
                         onPress={this.props.addTaskConfirmButtonHandler}
                     />
                     <Button
                         title='Cancel'
+                        buttonStyle={{backgroundColor: '#2699FB'}}
                         onPress={this.props.addTaskCancelButtonHandler}
                     />
                     </View>

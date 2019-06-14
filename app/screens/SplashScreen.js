@@ -33,7 +33,7 @@ export default class SplashScreen extends React.Component {
     return (
         <View style={styles.container}>
             <Icon name='check' type='font-awesome' size={200}/>
-            <Text style={{fontSize: 40, textAlign: 'center'}}>Cheque</Text>
+            <Text style={{ fontSize: 40, textAlign: 'center' }}>Cheque</Text>
         </View>
     );
   }
@@ -42,6 +42,7 @@ export default class SplashScreen extends React.Component {
 const styles=StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#2699FB'
     },
 });
