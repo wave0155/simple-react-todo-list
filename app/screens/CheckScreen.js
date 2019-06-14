@@ -96,8 +96,8 @@ export default class CheckScreen extends React.Component {
   }
 
   deleteHandler = () => {
-    this.setState({
-      task: this.state.task.splice(this.state.editorTarget, 1)
+    this.setState(() => {
+      this.state.task.splice(this.state.editorTarget, 1)
     })
     this.setState({
       isEditorVisible: false,
@@ -119,9 +119,8 @@ export default class CheckScreen extends React.Component {
 
   addTaskConfirmButtonHandler = () => {
     if(this.state.adderInput !== null) {
-        tempObject = {name: this.state.adderInput, done: false}
         this.setState({
-          task: [...this.state.task, tempObject],
+          task: [...this.state.task, {name: this.state.adderInput, done: false}],
           isAdderVisible: false,
           adderInput: null,
         })
