@@ -14,6 +14,12 @@ const AppNavigator = createStackNavigator({
     screen: CheckScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Todo List',
+      headerStyle: {
+        backgroundColor:'#2699FB'
+      },
+      headerTitleStyle: {
+        color: 'white'
+      }
     }),
   },
 });

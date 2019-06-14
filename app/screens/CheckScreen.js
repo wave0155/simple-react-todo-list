@@ -21,6 +21,7 @@ export default class CheckScreen extends React.Component {
       editorTarget: null,
       adderInput: null,
       editorInput: null,
+      listRefresher: false,
     }
   }
 
@@ -50,7 +51,7 @@ export default class CheckScreen extends React.Component {
                 />
               )
             }}
-            extraData={this.state}
+            extraData={this.state.listRefresher}
           />
         </View>
         {/* Adder Overlay */}
@@ -85,6 +86,7 @@ export default class CheckScreen extends React.Component {
         task,
       }
     })
+    this.setState({listRefresher: !this.state.listRefresher})
   }
 
   editHandler = (item, index) => {
@@ -92,6 +94,7 @@ export default class CheckScreen extends React.Component {
       isEditorVisible: true,
       editorInput: item.name,
       editorTarget: index,
+      listRefresher: !this.state.listRefresher
     })
   }
 
@@ -103,6 +106,7 @@ export default class CheckScreen extends React.Component {
       isEditorVisible: false,
       editorInput: null,
       editorTarget: null,
+      listRefresher: !this.state.listRefresher
     })
   }
 
@@ -123,6 +127,7 @@ export default class CheckScreen extends React.Component {
           task: [...this.state.task, {name: this.state.adderInput, done: false}],
           isAdderVisible: false,
           adderInput: null,
+          listRefresher: !this.state.listRefresher
         })
     }
     this.setState({ isAdderVisible: false })
@@ -161,6 +166,7 @@ export default class CheckScreen extends React.Component {
         this.setState({
           isEditorVisible: false,
           editorInput: null,
+          listRefresher: !this.state.listRefresher,
           editorTarget: null,
         })
     }

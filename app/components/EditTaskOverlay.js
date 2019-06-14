@@ -23,7 +23,7 @@ export default class EditTaskOverlay extends React.Component {
                             placeholder='Task Name'
                             leftIcon={{ type: 'font-awesome', name: 'tasks' }}
                             onChangeText={(text) => this.props.editorInputHandler(text)}
-                            value={this.props.editorInput}
+                            defaultValue={this.props.editorInput}
                             autoFocus={true}
                             leftIconContainerStyle={{marginRight: 5, marginLeft: 0}}
                         />
