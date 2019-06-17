@@ -157,11 +157,7 @@ export default class CheckScreen extends React.Component {
   editTaskConfirmButtonHandler = () => {
     if(this.state.editorInput !== '') {
         this.setState(() => {
-          task = this.state.task
-          task[this.state.editorTarget].name = this.state.editorInput
-          return {
-              task,
-          }
+          this.state.task[this.state.editorTarget].name = this.state.editorInput
         })
         this.setState({
           isEditorVisible: false,
