@@ -11,7 +11,7 @@ export default class TodoListItem extends React.Component {
   render() {
     return (
     <TouchableOpacity 
-        style={{flex: 5,flexDirection: 'row', height: 50, alignItems: 'center', marginLeft: 15}}
+        style={{flex: 5,flexDirection: 'row', height: 50, alignItems: 'center', marginLeft: 10}}
         onPress={() => {
             this.props.checkerHandler(this.props.index)
         }}
@@ -20,7 +20,7 @@ export default class TodoListItem extends React.Component {
         }}
         >
         <CheckBox condition={this.props.done}/>
-        <View style={{flex: 4, marginLeft: 17}}><Text style={{fontSize: 15}}>{this.props.name}</Text></View>
+        <View style={{flex: 4, marginLeft: 10}}><Text style={{fontSize: 17}}>{this.props.name}</Text></View>
     </TouchableOpacity>
     );
   }

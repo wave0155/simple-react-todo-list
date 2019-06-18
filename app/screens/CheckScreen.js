@@ -51,6 +51,7 @@ export default class CheckScreen extends React.Component {
                 />
               )
             }}
+            ItemSeparatorComponent={this.renderSeparator}
             extraData={this.state.listRefresher}
           />
         </View>
@@ -74,6 +75,19 @@ export default class CheckScreen extends React.Component {
         />
       </View>
     );
+  }
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: '90%',
+          backgroundColor: '#C0C0C0',
+          marginLeft: '5%'
+        }}
+      />
+    )
   }
 
   keyExtractor = (item, index) => index.toString()
