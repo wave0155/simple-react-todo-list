@@ -18,9 +18,9 @@ export default class CheckScreen extends React.Component {
       ],
       isAdderVisible: false,
       isEditorVisible: false,
-      editorTarget: null,
-      adderInput: null,
-      editorInput: null,
+      editorTargetIndex: null,
+      adderInput: '',
+      editorInput: '',
       listRefresher: false,
     }
   }
@@ -107,19 +107,19 @@ export default class CheckScreen extends React.Component {
     this.setState({
       isEditorVisible: true,
       editorInput: item.name,
-      editorTarget: index,
+      editorTargetIndex: index,
       listRefresher: !this.state.listRefresher
     })
   }
 
   deleteHandler = () => {
     this.setState(() => {
-      this.state.task.splice(this.state.editorTarget, 1)
+      this.state.task.splice(this.state.editorTargetIndex, 1)
     })
     this.setState({
       isEditorVisible: false,
-      editorInput: null,
-      editorTarget: null,
+      editorInput: '',
+      editorTargetIndex: '',
       listRefresher: !this.state.listRefresher
     })
   }
@@ -127,7 +127,7 @@ export default class CheckScreen extends React.Component {
   backdropAdderOverlayHandler = () => {
     this.setState({ 
       isAdderVisible: false,
-      adderInput: null
+      adderInput: ''
     })
   }
 
@@ -136,11 +136,11 @@ export default class CheckScreen extends React.Component {
   }
 
   addTaskConfirmButtonHandler = () => {
-    if(this.state.adderInput !== null) {
+    if(this.taskInputValidation(this.state.adderInput)) {
         this.setState({
           task: [...this.state.task, {name: this.state.adderInput, done: false}],
           isAdderVisible: false,
-          adderInput: null,
+          adderInput: '',
           listRefresher: !this.state.listRefresher
         })
     }
@@ -150,15 +150,15 @@ export default class CheckScreen extends React.Component {
   addTaskCancelButtonHandler = () => {
     this.setState({ 
       isAdderVisible: false, 
-      adderInput: null, 
+      adderInput: '', 
     })
   }
 
   backdropEditorOverlayHandler = () => {
     this.setState({ 
       isEditorVisible: false,
-      editorInput: null,
-      editorTarget: null,
+      editorInput: '',
+      editorTargetIndex: '',
     })
   }
   
@@ -169,30 +169,39 @@ export default class CheckScreen extends React.Component {
   }
 
   editTaskConfirmButtonHandler = () => {
-    if(this.state.editorInput !== '') {
+    if(this.taskInputValidation(this.state.editorInput)) {
         this.setState(() => {
-          this.state.task[this.state.editorTarget].name = this.state.editorInput
+          this.state.task[this.state.editorTargetIndex].name = this.state.editorInput
         })
         this.setState({
           isEditorVisible: false,
-          editorInput: null,
+          editorInput: '',
           listRefresher: !this.state.listRefresher,
-          editorTarget: null,
+          editorTargetIndex: '',
         })
     }
     this.setState({ 
           isEditorVisible: false,
-          editorInput: null,
-          editorTarget: null,
+          editorInput: '',
+          editorTargetIndex: '',
     })
   }
 
   editTaskCancelButtonHandler = () => {
     this.setState({
       isEditorVisible: false,
-      editorInput: null,
-      editorTarget: null,
+      editorInput: '',
+      editorTargetIndex: '',
     })
+  }
+
+  taskInputValidation(input) {
+    if(input !== '') {
+      if (input.replace(/\s/g, '').length) {
+        return true
+      }
+    }
+    return false
   }
 }
 
@@ -204,7 +213,4 @@ const styles=StyleSheet.create({
     flex: 1,
     justifyContent: 'space-evenly',
   },
-  addTaskInput: {
-    
-  }
 });
